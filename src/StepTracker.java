@@ -1,107 +1,96 @@
 import java.util.Scanner;
 
 public class StepTracker {
-    int[][] dataStep = new int[12][30];// массив 12 месяцев по 30 дней должны создаться со значениями 0
+    int[][] dataStep = new int[12][30];
     int goalStep = 10000;
-    int m; //переменные для работы с массивом
+    int m;
     int d;
-    int dayNow; //переменные текущий день и месяц
+    int dayNow;
     int monthNow;
-    int summStep=0; //Переменная Сумма шагов для отправки в класс конвертации
+    int summStep=0;
+
     private Converter converter = new Converter();
 
-    void exGoalStep(Scanner scanner) { // Изменение целевого значения количества шагов. Нужно привязываться к определенному дню? Если без привязки, то:
-        System.out.println("Задайте новое целевое количество шагов.");
+    void enterMonth(Scanner scanner) {
+        System.out.println("Введите номер месяца от 0 до 11 (0-январь, 1-февраль, 2-март, 3-апрель, 4-май, 5-июнь, 6-июль, 7-август, 8-сентябрь, 9-октябрь, 10- ноябрь, 11-декабрь)");
         while (true) {
-            int newGoalStep = scanner.nextInt(); // записываем введенное пользователем значенеит в новую переменную
-            if (newGoalStep >= 0) { //проверка на условие ТЗ
-                goalStep = newGoalStep;
+            int month = scanner.nextInt();
+            if (month >= 0 && month <= 11) {
+                m = month;
                 break;
             } else {
-                System.out.println("Число должно быть больше 0. Давайте попробуем еще раз!"); // выполняем цикл еще раз. До ввода пользователем положительного числа.
+                System.out.println("Извините, такого месяца нет. Введите число от 0 до 11");
             }
         }
     }
 
-    void stepPerDay(Scanner scanner) { //Ввод количества шагов за день
-        System.out.println("Введите номер месяца от 0 до 11 (январь - 0, декабрь - 11) ");
+    void exGoalStep(Scanner scanner) {
+        System.out.println("Задайте новое целевое количество шагов.");
         while (true) {
-            int month = scanner.nextInt(); // записали
-            if (month >= 0 && month <= 11) { //проверка корректности введенного числа
-                m = month;
+            int newGoalStep = scanner.nextInt();
+            if (newGoalStep >= 0) {
+                goalStep = newGoalStep;
                 break;
             } else {
-                System.out.println("Извините, такого месяца нет. Введите число от 0 до 11"); // выполняем цикл еще раз.
+                System.out.println("Число должно быть больше 0. Давайте попробуем еще раз!");
             }
         }
+    }
+
+    void stepPerDay(Scanner scanner) {
+        enterMonth(scanner);
         System.out.println("Введите номер дня от 1 до 30");
         while (true) {
-            int day = scanner.nextInt(); // записали
-            if (day > 0 && day <= 30) { //проверка корректности введенного числа
+            int day = scanner.nextInt();
+            if (day > 0 && day <= 30) {
                 d = day;
                 break;
             } else {
-                System.out.println("Извините, такого дня нет. Введите число от 1 до 30"); // выполняем цикл еще раз.
+                System.out.println("Извините, такого дня нет. Введите число от 1 до 30");
             }
         }
         System.out.println("Введите количество шагов за этот день");
         while (true) {
-            int stepDay = scanner.nextInt(); // записываем введенное пользователем значенеит в новую переменную
-            if (stepDay >= 0) { //проверка на условие ТЗ
+            int stepDay = scanner.nextInt();
+            if (stepDay >= 0) {
                 dataStep[m][d-1] = stepDay;
                 break;
             } else {
-                System.out.println("Число должно быть больше 0. Давайте попробуем еще раз!"); // выполняем цикл еще раз. До ввода пользователем положительного числа.
+                System.out.println("Число должно быть больше 0. Давайте попробуем еще раз!");
             }
         }
     }
 
     void NowDayMonth(Scanner scanner) { //этот метод запрашивает у пользоателя Сегодняшние дату и месяц. Лучше всего запросить информацию 1 раз перед вызовом главного меню. Т.К. данные в течении дня не меняются
-        System.out.println("Какой сейчас месяц? Введите номер месяца от 0 до 11 (январь - 0, декабрь - 11)");
+        System.out.println("Какой сейчас месяц? Введите номер месяца от 0 до 11 (0-январь, 1-февраль, 2-март, 3-апрель, 4-май, 5-июнь, 6-июль, 7-август, 8-сентябрь, 9-октябрь, 10- ноябрь, 11-декабрь)");
         while (true) {
-            monthNow = scanner.nextInt(); // записали
-            if (monthNow >= 0 && monthNow <= 11) { //проверка корректности введенного числа
+            monthNow = scanner.nextInt();
+            if (monthNow >= 0 && monthNow <= 11) {
                 break;
             } else {
-                System.out.println("Извините, такого месяца нет. Введите число от 0 до 11"); // выполняем цикл еще раз.
+                System.out.println("Извините, такого месяца нет. Введите число от 0 до 11");
             }
         }
         System.out.println("Какое сегодня число? (от 1 до 30)");
         while (true) {
-            dayNow = scanner.nextInt(); // записали
-            if (dayNow > 0 && dayNow <= 30) { //проверка корректности введенного числа
+            dayNow = scanner.nextInt();
+            if (dayNow > 0 && dayNow <= 30) {
                 break;
             } else {
-                System.out.println("Извините, такого дня нет. Введите число от 1 до 30"); // выполняем цикл еще раз.
+                System.out.println("Извините, такого дня нет. Введите число от 1 до 30");
             }
         }
     }
 
     void statisticsForTheMonth(Scanner scanner) {//Статистика
-        System.out.println("За какой месяц показать статистику? Введите номер месяца от 0 до 11 (январь - 0, декабрь - 11) ");
-        while (true) {
-            m = scanner.nextInt(); // записали
-            if (m >= 0 && m <= 11){
-                break;//проверка корректности введенного числа{
-            } else {
-                System.out.println("Извините, такого месяца нет. Введите число от 0 до 11"); // выполняем цикл еще раз.
-            }
-        }
+        System.out.print("За какой месяц показать статистику?");
+        enterMonth(scanner);
 
         if (m==monthNow && dayNow==1 ) { //нужна проверка на день и месяц. Если текущий месяц равен месяцу по которому запрошены данные, то все данные должны быть 0
-            System.out.println("Месяц только начался! Данные не накоплены!");
-            System.out.println("Количество пройденных шагов по дням: 0");
-            System.out.println("Общее количество шагов за месяц: 0");
-            System.out.println("Максимальное пройденное количество шагов в этом месяце: 0");
-            System.out.println("Среднее количество шагов за день: 0");
-            System.out.println("Пройденная дистанция в километрах: 0");
-            System.out.println("Количество сожжённых килокалорий: 0");
-            System.out.println("Выполнили дневную цель по шагам подряд: 0 раз");
-
-
-        }else { //если все в порядке - выводим статистику
+            System.out.println("Месяц только начался! Данные не накоплены!\nКоличество пройденных шагов по дням: 0\nОбщее количество шагов за месяц: 0\nМаксимальное пройденное количество шагов в этом месяце: 0\nСреднее количество шагов за день: 0\nПройденная дистанция в километрах: 0\nКоличество сожжённых килокалорий: 0\nВыполнили дневную цель по шагам подряд: 0 раз");
+        }else {
             System.out.println("Количество пройденных шагов по дням:");
-            for (int i=0; i<dataStep[0].length; i++){//кол-во шагов по дням
+            for (int i=0; i<dataStep[0].length; i++){
                 System.out.print((i+1)+" день: "+dataStep[m][i]+",");
                 }
 
@@ -111,7 +100,7 @@ public class StepTracker {
                 summStep = summStep+dataStep[m][i];
                  }
                  System.out.println("\nОбщее количество шагов за месяц: " + summStep);
-                 int maxStep=0; //Максимальное кол-во шагов в месяце
+                 int maxStep=0;
                  for (int i=0; i<dataStep[0].length; i++){
                     if (dataStep[m][i]>maxStep){
                     maxStep=dataStep[m][i];
@@ -122,7 +111,7 @@ public class StepTracker {
                 double averagePerDay = 0;
                 int s=0;
                  if (m==monthNow){//среднее кол-во шагов. Если запрошенный месяц совпадает с текущим месяцем, то среднее кол-во считаем по дням с 1 по текущий день. Если месяц другой, то за 30 дней
-                    for (int i=0; i<(d-1); i++){  // считаем сумму шагов за неполный месяц
+                    for (int i=0; i<(d-1); i++){
                         if (dataStep[m][i]>summStep){
                          s = s + dataStep[m][i];
                          }
@@ -136,12 +125,13 @@ public class StepTracker {
                  System.out.printf("\nЗа месяц вы сожгли: %.0f Ккал ",converter.stepToKcalories(summStep));
 
             int maxSeries=0; //серия
-            int a=0; // дополнительная переменная
-            for (int i=0; i<dataStep[0].length; i++){  //перебор массива месяца
+            int a=0;
+            for (int i=0; i<dataStep[0].length; i++){
                 if (dataStep[m][i]>=goalStep){
                     a=a+1;
                 } else if (a>maxSeries){
                     maxSeries=a;
+                    a=0;
                 } else {
                     a=0;
                 }
@@ -150,6 +140,4 @@ public class StepTracker {
                 }
 
     }
-
-
     }

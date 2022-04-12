@@ -1,9 +1,10 @@
 import java.util.Scanner;
 
-class Converter  {
+public class Converter  {
 
+       double k=0.00075;
        double stepToKm(int summStep){
-              return summStep*0.00075;
+              return summStep*k;
        };
 
        double stepToKcalories(int summStep){
