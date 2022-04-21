@@ -14,11 +14,12 @@ public class Main {
         int month;
         int day;
 
-
-        loop:
         while (true) {
             printMenu();
             int userInput = scanner.nextInt();
+            if (userInput ==0) {
+                break ;
+            }
             switch (userInput) {
                 case 1:
                     month = monthInput(scanner);
@@ -46,10 +47,9 @@ public class Main {
                     }
                     stepTrack.exGoalStep(newGoalStep);
                     break;
-                case 0:
-                    break loop;
                 default:
                     System.out.println("Извините, такой команды пока нет");
+
             }
         }
 
